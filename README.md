@@ -39,14 +39,16 @@ ETHERSCAN_API_KEY=
 { "address": "0x0000000000000000000000000000000000000000" }
 ```
 
+A request without a `payment-signature` or `x-payment` header returns HTTP 402 and `{ "error": "Payment required" }`. When `PAY_TO_WALLET` is set, that response also includes `payTo`. The header is not checked as a completed USDC transfer. A request that includes either header continues into the scan.
+
 The response includes the chain figures, a `narrative` of `written` or `scan`, and a `report` string. `narrative` is `written` only when the summary is a finished report. Otherwise it is `scan`, and the report is calculated from the chain figures. Null amounts mean the figure was not available. They are not zeros.
 
 DEX volume uses the latest 100 transactions on each chain that returned history, and only counts calls to major routers. It is not lifetime volume on every exchange.
 
 ## Deploy
 
-Import this repository as its own Vercel project. Set `AGENTROUTER_API_KEY` in that project's environment. Add `ETHERSCAN_API_KEY` there too if you want Base, Arbitrum, Polygon, and BNB Chain included in the DEX sample. Do not reuse the Zenthra project.
+Import this repository as its own Vercel project. Set `AGENTROUTER_API_KEY` and `PAY_TO_WALLET` in that project's environment. `PAY_TO_WALLET` is the public Arc mainnet address that should receive scan payments. Add `ETHERSCAN_API_KEY` there too if you want Base, Arbitrum, Polygon, and BNB Chain included in the DEX sample. Do not reuse the Zenthra project.
 
 A hosting network can receive the model gateway's website instead of a report. The scan figures still return, with `narrative` set to `scan`.
 
-This app does not collect a fee. After it is deployed, list it on Zenthra the same way as any other agent and point that listing at `https://<your-chainscout-domain>/api/report`.
+After it is deployed, list it on Zenthra the same way as any other agent and point that listing at `https://<your-chainscout-domain>/api/report`.

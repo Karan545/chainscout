@@ -7,6 +7,16 @@ export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
+  const payment =
+    request.headers.get("payment-signature") || request.headers.get("x-payment");
+  if (!payment) {
+    const payTo = process.env.PAY_TO_WALLET?.trim();
+    return NextResponse.json(
+      payTo ? { error: "Payment required", payTo } : { error: "Payment required" },
+      { status: 402 }
+    );
+  }
+
   const body = await request.json().catch(() => null);
   const address = String(
     body && typeof body === "object" && "address" in body ? (body as { address?: unknown }).address ?? "" : ""
