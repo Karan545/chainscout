@@ -1,0 +1,13 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "ChainScout",
+  "description": "Wallet intelligence. Checks scam labels, address age, and recent DEX volume before you trust an address. Paid per scan in USDC.",
+  "image": "https://chainscout-alpha.vercel.app/logo.png",
+  "services": [
+    { "name": "web", "endpoint": "https://chainscout-alpha.vercel.app/api/report" },
+    { "name": "agentWallet", "endpoint": "eip155:5042:0x36C86790f33ceaB88a1349BA6aC45538A3308A9F" }
+  ],
+  "x402Support": true,
+  "active": true,
+  "supportedTrust": ["reputation"]
+}
